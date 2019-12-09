@@ -1,29 +1,15 @@
 #include <iostream>
 #include <conio.h>
 #include <fstream>
+#include <stdio.h>
+#include <windows.h>
+#include <Wincrypt.h>
 #include "Header.h"
+
+#define BUFSIZE 1024
+#define MD5LEN  16
 using namespace std;
-//онврх дндекюмн. лнфере ашрэ сбепеммшлх. бяе асдер дндекюмн. ярюбре 30 хг 30
-//онврх дндекюмн. лнфере ашрэ сбепеммшлх. бяе асдер дндекюмн. ярюбре 30 хг 30
-//онврх дндекюмн. лнфере ашрэ сбепеммшлх. бяе асдер дндекюмн. ярюбре 30 хг 30
-//онврх дндекюмн. лнфере ашрэ сбепеммшлх. бяе асдер дндекюмн. ярюбре 30 хг 30
-//онврх дндекюмн. лнфере ашрэ сбепеммшлх. бяе асдер дндекюмн. ярюбре 30 хг 30
-//онврх дндекюмн. лнфере ашрэ сбепеммшлх. бяе асдер дндекюмн. ярюбре 30 хг 30
-//онврх дндекюмн. лнфере ашрэ сбепеммшлх. бяе асдер дндекюмн. ярюбре 30 хг 30
-//онврх дндекюмн. лнфере ашрэ сбепеммшлх. бяе асдер дндекюмн. ярюбре 30 хг 30
-//онврх дндекюмн. лнфере ашрэ сбепеммшлх. бяе асдер дндекюмн. ярюбре 30 хг 30
-//онврх дндекюмн. лнфере ашрэ сбепеммшлх. бяе асдер дндекюмн. ярюбре 30 хг 30
-//онврх дндекюмн. лнфере ашрэ сбепеммшлх. бяе асдер дндекюмн. ярюбре 30 хг 30
-//онврх дндекюмн. лнфере ашрэ сбепеммшлх. бяе асдер дндекюмн. ярюбре 30 хг 30
-//онврх дндекюмн. лнфере ашрэ сбепеммшлх. бяе асдер дндекюмн. ярюбре 30 хг 30
-//онврх дндекюмн. лнфере ашрэ сбепеммшлх. бяе асдер дндекюмн. ярюбре 30 хг 30
-//онврх дндекюмн. лнфере ашрэ сбепеммшлх. бяе асдер дндекюмн. ярюбре 30 хг 30
-//онврх дндекюмн. лнфере ашрэ сбепеммшлх. бяе асдер дндекюмн. ярюбре 30 хг 30
-//онврх дндекюмн. лнфере ашрэ сбепеммшлх. бяе асдер дндекюмн. ярюбре 30 хг 30
-//онврх дндекюмн. лнфере ашрэ сбепеммшлх. бяе асдер дндекюмн. ярюбре 30 хг 30
-//онврх дндекюмн. лнфере ашрэ сбепеммшлх. бяе асдер дндекюмн. ярюбре 30 хг 30
-//онврх дндекюмн. лнфере ашрэ сбепеммшлх. бяе асдер дндекюмн. ярюбре 30 хг 30
-//онврх дндекюмн. лнфере ашрэ сбепеммшлх. бяе асдер дндекюмн. ярюбре 30 хг 30
+
 int back() {
 	int code;
 	cout << "мЮФЛХРЕ SPACE, ЕЯКХ УНРХРЕ НАПЮРМН";
@@ -100,6 +86,165 @@ int l5()
 			}
 		}
 	}
+	f1.close();
+	f2.close();
 	back();
 	return 0;
+}
+int l13()
+{
+	setlocale(LC_ALL, "Russian");
+	ifstream f1("text1.txt");
+	ofstream f2("text2.txt");
+	int n;
+	cout << "~~~~~~~~~~~~~~~~WARNING~~~~~~~~~~~~~~~~" << endl;
+	cout << "пЮАНРЮЕР, МН ВЕПЕГ ПЮГ Х МЕ ЯН БЯЕЛХ ЯКНБЮЛХ. еЯКХ СЙЮФХРЕ МЮ НЬХАЙС-АСДС ОПХГМЮРЕКЕМ" << endl;
+	cout << "бБЕДХРЕ ЯЙНКЭЙН ЯКНБ АСДЕР Б ЯКНБЮПЕ" << endl;
+	cin >> n;
+	cout << "гЮОНКМХРЕ ЯКНБЮПЭ" << endl;
+	for (int i = 0; i < n; i++)
+	{
+		char word[25] = { '\0' };
+		char line[250] = { '\0' };
+		cin >> word;
+		while (!f1.eof())
+		{
+			bool flag = false;
+			f1.getline(line, 250);
+			if (strstr(line, word))
+			{
+				int l1 = strlen(word);
+				int l2 = 0;
+				for (int i = 0; i < strlen(line); i++)
+				{
+					l2 = 0;
+					flag = false;
+					int ii = i;
+					for (int j = 0; j < 25; j++)
+					{
+						if (line[ii] == word[j])
+						{
+							ii++; l2++;
+						}
+						else if (line[ii] != word[j] && l2 == l1)
+						{
+							flag = true; break;
+						}
+						else if (line[ii] != word[j]) { break; }
+
+					}
+					if (flag) { f2 << word << ' '; }
+				}
+			}
+		}
+		f1.seekg(0, ios::beg);
+	}
+	f1.close();
+	f2.close();
+	return 0;
+}
+unsigned long long md5()
+{
+	DWORD dwStatus = 0;
+	BOOL bResult = FALSE;
+	HCRYPTPROV hProv = 0;
+	HCRYPTHASH hHash = 0;
+	HANDLE hFile = NULL;
+	BYTE rgbFile[BUFSIZE];
+	DWORD cbRead = 0;
+	BYTE rgbHash[MD5LEN];
+	DWORD cbHash = 0;
+	CHAR rgbDigits[] = "0123456789abcdef";
+	LPCWSTR filename = L"text1.txt";
+
+
+	hFile = CreateFile(filename,
+		GENERIC_READ,
+		FILE_SHARE_READ,
+		NULL,
+		OPEN_EXISTING,
+		FILE_FLAG_SEQUENTIAL_SCAN,
+		NULL);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+	{
+		dwStatus = GetLastError();
+		printf("Error opening file %s\nError: %d\n", filename,
+			dwStatus);
+		return dwStatus;
+	}
+
+
+	if (!CryptAcquireContext(&hProv,
+		NULL,
+		NULL,
+		PROV_RSA_FULL,
+		CRYPT_VERIFYCONTEXT))
+	{
+		dwStatus = GetLastError();
+		printf("CryptAcquireContext failed: %d\n", dwStatus);
+		CloseHandle(hFile);
+		return dwStatus;
+	}
+
+	if (!CryptCreateHash(hProv, CALG_MD5, 0, 0, &hHash))
+	{
+		dwStatus = GetLastError();
+		printf("CryptAcquireContext failed: %d\n", dwStatus);
+		CloseHandle(hFile);
+		CryptReleaseContext(hProv, 0);
+		return dwStatus;
+	}
+
+	while (bResult = ReadFile(hFile, rgbFile, BUFSIZE,
+		&cbRead, NULL))
+	{
+		if (0 == cbRead)
+		{
+			break;
+		}
+
+		if (!CryptHashData(hHash, rgbFile, cbRead, 0))
+		{
+			dwStatus = GetLastError();
+			printf("CryptHashData failed: %d\n", dwStatus);
+			CryptReleaseContext(hProv, 0);
+			CryptDestroyHash(hHash);
+			CloseHandle(hFile);
+			return dwStatus;
+		}
+	}
+
+	if (!bResult)
+	{
+		dwStatus = GetLastError();
+		printf("ReadFile failed: %d\n", dwStatus);
+		CryptReleaseContext(hProv, 0);
+		CryptDestroyHash(hHash);
+		CloseHandle(hFile);
+		return dwStatus;
+	}
+
+	cbHash = MD5LEN;
+	if (CryptGetHashParam(hHash, HP_HASHVAL, rgbHash, &cbHash, 0))
+	{
+		printf("MD5: ", filename);
+		for (DWORD i = 0; i < cbHash; i++)
+		{
+			printf("%c%c", rgbDigits[rgbHash[i] >> 4],
+				rgbDigits[rgbHash[i] & 0xf]);
+		}
+		printf("\n");
+	}
+	else
+	{
+		dwStatus = GetLastError();
+		printf("CryptGetHashParam failed: %d\n", dwStatus);
+	}
+
+	CryptDestroyHash(hHash);
+	CryptReleaseContext(hProv, 0);
+	CloseHandle(hFile);
+	back();
+	return dwStatus;
 }
